@@ -9,8 +9,8 @@ const RUN_MULTIPLIER = 1.5;
 const CROUCH_MULTIPLIER = 0.5;
 const PLAYER_HEIGHT = 1.8;
 const CROUCH_HEIGHT = 1.0;
-const ENEMY_COUNT = 5;
-const RESPAWN_TIME = 3;
+const ENEMY_COUNT = 3;
+const RESPAWN_TIME = 5;
 const MAP_BOUNDS = 19;
 
 interface Keys {
@@ -56,8 +56,8 @@ export function use3DGameEngine(eraId: string) {
     position: { ...PLAYER_SPAWN },
     velocity: { x: 0, y: 0, z: 0 },
     rotation: 0,
-    hp: 100,
-    maxHp: 100,
+    hp: 150,
+    maxHp: 150,
     ammo: weapon.magSize,
     maxAmmo: weapon.magSize,
     isReloading: false,
@@ -350,22 +350,22 @@ export function use3DGameEngine(eraId: string) {
             }
 
             // Shoot
-            if (now / 1000 - e.lastFireTime > 1.5 && e.ammo > 0) {
+            if (now / 1000 - e.lastFireTime > 2.5 && e.ammo > 0) {
               e.lastFireTime = now / 1000;
               e.ammo--;
               if (aDist > 0) {
                 const dir = { x: toPlayer.x / aDist, y: (p.position.y + 0.8 - e.position.y - 0.8) / aDist, z: toPlayer.z / aDist };
                 // Add inaccuracy
-                const acc = 0.15;
+                const acc = 0.3;
                 projs.push({
                   id: projectileIdRef.current++,
                   position: { x: e.position.x, y: e.position.y + 1, z: e.position.z },
                   velocity: {
-                    x: (dir.x + (Math.random() - 0.5) * acc) * 20,
-                    y: (dir.y + (Math.random() - 0.5) * acc) * 20,
-                    z: (dir.z + (Math.random() - 0.5) * acc) * 20,
+                    x: (dir.x + (Math.random() - 0.5) * acc) * 15,
+                    y: (dir.y + (Math.random() - 0.5) * acc) * 15,
+                    z: (dir.z + (Math.random() - 0.5) * acc) * 15,
                   },
-                  damage: 10,
+                  damage: 6,
                   ownerId: e.id,
                   lifetime: 3,
                 });
